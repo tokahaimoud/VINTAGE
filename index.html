@@ -2,8 +2,16 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>VINTAGE_STORE | متجر الزبائن</title>
+
+  <!-- إضافة التطبيق -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0A192F">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -586,6 +594,24 @@
     }
 
     render();
+       
+
+    // تسجيل التطبيق
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+
+    // (اختياري) زر "ثبّت التطبيق" لأندرويد
+    let installEvt = null;
+    window.addEventListener("beforeinstallprompt", e => {
+      e.preventDefault(); installEvt = e;
+      const b = document.createElement("button");
+      b.textContent = "📲 ثبّت التطبيق";
+      b.className = "fixed bottom-4 right-4 z-50 navy-bg text-white px-5 py-3 rounded-full font-bold text-sm shadow-xl";
+      b.onclick = async () => { installEvt.prompt(); await installEvt.userChoice; b.remove(); };
+      document.body.appendChild(b);
+    });
+  </script>
+</body>
+</html>
   </script>
 </body>
 </html>
